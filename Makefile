@@ -28,8 +28,25 @@ ELC := out/elc
 	8cc/path.c \
 	8cc/set.c \
 	8cc/vector.c
+SMILEYBASIC := out/SmileyBASIC
+SMILEYBASIC_SRCS := \
+	SmileyBASIC/buffer.c \
+	SmileyBASIC/cpp.c \
+	SmileyBASIC/debug.c \
+	SmileyBASIC/dict.c \
+	SmileyBASIC/encoding.c \
+	SmileyBASIC/error.c \
+	SmileyBASIC/file.c \
+	SmileyBASIC/gen.c \
+	SmileyBASIC/lex.c \
+	SmileyBASIC/main.c \
+	SmileyBASIC/map.c \
+	SmileyBASIC/parse.c \
+	SmileyBASIC/path.c \
+	SmileyBASIC/set.c \
+	SmileyBASIC/vector.c
 
-BINS := $(8CC) $(ELI) $(ELC) out/dump_ir out/befunge out/bfopt out/cmake_putc_helper out/whirl
+BINS := $(SMILEYBASIC) $(8CC) $(ELI) $(ELC) out/dump_ir out/befunge out/bfopt out/cmake_putc_helper out/whirl
 LIB_IR_SRCS := ir/ir.c ir/table.c
 LIB_IR := $(LIB_IR_SRCS:ir/%.c=out/%.o)
 
@@ -55,7 +72,7 @@ out/git_submodule.stamp: .git/index
 	git submodule update --init
 	touch $@
 
-$(8CC_SRCS) Whitespace/whitespace.c tinycc/configure: out/git_submodule.stamp
+$(SMILEYBASIC_SRCS) $(8CC_SRCS) Whitespace/whitespace.c tinycc/configure: out/git_submodule.stamp
 
 Whitespace/whitespace.out: Whitespace/whitespace.c
 	$(MAKE) -C Whitespace 'MAX_SOURCE_SIZE:=16777216' 'MAX_BYTECODE_SIZE:=16777216' 'MAX_N_LABEL:=1048576' 'HEAP_SIZE:=16777224'
@@ -160,6 +177,9 @@ $(ELC): $(LIB_IR) $(ELC_SRCS:target/%.c=out/%.o)
 
 $(8CC): $(8CC_SRCS)
 	$(MAKE) -C 8cc && cp 8cc/8cc $@
+
+$(SMILEYBASIC): $(SMILEYBASIC_SRCS)
+	$(MAKE) -C SmileyBASIC && cp SmileyBASIC/SmileyBASIC $@
 
 # Stage tests
 
