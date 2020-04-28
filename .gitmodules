@@ -7,3 +7,6 @@
 [submodule "tinycc"]
 	path = tinycc
 	url = https://github.com/mirror/tinycc
+[submodule "SmileyBASIC"]
+	path = SmileyBASIC
+	url = https://github.com/chz100p/SmileyBASIC.git
